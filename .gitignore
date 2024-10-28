@@ -1,3 +1,9 @@
+# テスト実行時の一時ファイルを除外
+tests/fixtures/*.csv
+tests/fixtures/*.xlsx
+!tests/fixtures/sample_*.csv
+!tests/fixtures/sample_*.xlsx
+
 # Created by https://www.toptal.com/developers/gitignore/api/python,macos,visualstudiocode,linux,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,macos,visualstudiocode,linux,windows
 
@@ -23,7 +29,8 @@
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
