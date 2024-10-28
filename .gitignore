@@ -1,3 +1,5 @@
+tmp_dl/
+
 # テスト実行時の一時ファイルを除外
 tests/fixtures/*.csv
 tests/fixtures/*.xlsx

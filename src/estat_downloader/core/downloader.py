@@ -1,6 +1,7 @@
 """
 Core download functionality for e-Stat Downloader
 """
+
 import asyncio
 import re
 from dataclasses import dataclass
@@ -14,6 +15,7 @@ from rich.progress import (
     BarColumn,
     Progress,
     SpinnerColumn,
+    TaskID,
     TaskProgressColumn,
     TextColumn,
 )
@@ -142,7 +144,7 @@ class DownloadManager:
         entry: URLEntry,
         subdir: Path,
         progress: Progress,
-        task_id: int,
+        task_id: TaskID,
     ) -> None:
         """
         Download a single file.
@@ -162,8 +164,19 @@ class DownloadManager:
                     "GET", str(entry.url), timeout=self.timeout
                 ) as response:
                     response.raise_for_status()
-                    total_size = int(response.headers.get("content-length", 0))
-                    progress.update(task_id, total=total_size)
+                    # content-lengthが存在しない場合の処理
+                    if "content-length" in response.headers:
+                        total_size = int(response.headers["content-length"])
+                        progress.update(task_id, total=total_size)
+                    else:
+                        # content-lengthが無い場合は不定長として処理
+                        progress.update(task_id, total=None)
+                        # プログレスバーの代わりにダウンロード済みサイズを表示
+                        progress.columns = (
+                            SpinnerColumn(),
+                            TextColumn("[progress.description]{task.description}"),
+                            TextColumn("Downloaded: {task.completed} bytes"),
+                        )
 
                     # ディレクトリが存在しない場合は作成
                     subdir.mkdir(parents=True, exist_ok=True)
