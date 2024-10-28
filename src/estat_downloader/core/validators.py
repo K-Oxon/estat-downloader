@@ -28,12 +28,12 @@ class FileFormat(str, Enum):
 
 
 class URLEntry(BaseModel):
-    url: HttpUrl = Field(description="URL of the statistical data")
-    format: FileFormat = Field(description="File format of the data")
-    stats_data_id: str = Field(description="Unique identifier for the statistical data")
-    title: Optional[str] = Field(
-        default=None, description="Title of the statistical data"
+    url: HttpUrl = Field(
+        description="ファイルへのダウンロードリンク format=DBの場合は統計表ID"
     )
+    format: FileFormat = Field(description="ファイル形式 DB or CSV or XLS")
+    stats_data_id: str = Field(description="統計表ID")
+    title: Optional[str] = Field(default=None, description="統計表のタイトル")
     description: Optional[str] = None
 
     @field_validator("url")
