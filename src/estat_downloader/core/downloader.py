@@ -261,7 +261,7 @@ class DownloadManager:
             tasks = []
             for entry in entries:
                 task_id = progress.add_task(
-                    description=f"Downloading {Path(entry.url.path).name}",
+                    description=f"Downloading {entry.get_filename()}",
                     total=None,  # コンテンツサイズが分かるまではNone
                 )
                 tasks.append(self.download_file(entry, subdir, progress, task_id))

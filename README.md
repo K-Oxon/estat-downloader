@@ -86,6 +86,23 @@ async def main():
 asyncio.run(main())
 ```
 
+## その他機能
+
+### メタデータ一括ダウンロード
+
+```bash
+export ESTAT_API_KEY="your-api-key-here"
+
+# 基本的な使用方法
+estat-downloader metadata urls.csv
+
+# 出力ディレクトリを指定
+estat-downloader metadata urls.csv -o ./metadata
+
+# 並行ダウンロード数を指定
+estat-downloader metadata urls.csv -c 5
+```
+
 ## dev
 
 ```bash
