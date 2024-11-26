@@ -32,7 +32,7 @@ class BaseEntry(BaseModel, ABC):
     """Base class for all entry types"""
 
     format: FileFormat = Field(description="ファイル形式 DB or CSV or XLS")
-    stats_data_id: str = Field(description="統計表ID")
+    stats_data_id: str = Field(description="統計表ID(10 or 12桁)")
     title: Optional[str] = Field(default=None, description="統計表のタイトル")
     description: Optional[str] = None
 
@@ -43,8 +43,8 @@ class BaseEntry(BaseModel, ABC):
             raise ValueError("stats_data_id cannot be empty")
 
         v = v.strip()
-        if not re.match(r"^\d{10}$", v):
-            raise ValueError("stats_data_id must be a 10-digit number")
+        if not re.match(r"^\d{10}$|^\d{12}$", v):
+            raise ValueError("stats_data_id must be a 10 or 12-digit number")
 
         return v
 

@@ -115,6 +115,12 @@ uv run python -c "import estat_downloader; estat_downloader.main()"
 uv run estat-downloader
 ```
 
+test
+
+```bash
+uv run pytest
+```
+
 ## LICENSE
 
 This project is licensed under the MIT License, see the [LICENSE](/LICENSE) file for details
