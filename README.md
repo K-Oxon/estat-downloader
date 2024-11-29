@@ -25,6 +25,7 @@ pip install git+https://github.com/K-Oxon/estat-downloader.git
 
 1. URLリストのCSVファイルを準備（例: `sample/test_local_finance_expenditure_and_revenue_breakdown.csv`）
    1. CSVファイルには url, format, stats_data_id の3つの列が必須です
+      1. `dataset__title__survey_date`の列があった場合、その内容(通常は調査年・年月)でサブディレクトリを作成します
    2. [e-Stat APIのデータカタログ情報取得API](https://www.e-stat.go.jp/api/api-info/e-stat-manual3-0#api_4_7) で取得できる情報を加工することを想定しています
 2. コマンドを実行
 

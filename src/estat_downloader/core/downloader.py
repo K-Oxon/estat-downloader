@@ -155,6 +155,11 @@ class DownloadManager:
             progress: Progress bar instance
             task_id: Task ID for progress tracking
         """
+
+        # dataset__title__survey_dateが存在する場合、サブディレクトリを追加
+        if entry.dataset__title__survey_date:
+            subdir = subdir / entry.dataset__title__survey_date
+
         # stats_data_idとフォーマットに基づいてファイル名を生成
         output_path = subdir / entry.get_filename()
 

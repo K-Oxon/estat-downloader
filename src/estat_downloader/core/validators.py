@@ -59,6 +59,9 @@ class URLEntry(BaseEntry):
 
     format: FileFormat = Field(description="File format (CSV or EXCEL)")
     url: HttpUrl = Field(description="URL of the statistical data")
+    dataset__title__survey_date: Optional[str] = Field(
+        default=None, description="調査年月"
+    )
 
     @field_validator("format")
     def validate_format(cls, v: FileFormat) -> FileFormat:
