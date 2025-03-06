@@ -1,6 +1,6 @@
 [project]
 name = "estat-downloader"
-version = "0.1.3"
+version = "0.1.4"
 description = "A CLI tool for downloading statistical data from e-Stat"
 readme = "README.md"
 authors = [{ name = "K-Oxon", email = "ko1011qfp@gmail.com" }]

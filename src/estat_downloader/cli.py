@@ -1,8 +1,5 @@
 """
 CLI entry point for e-Stat Downloader
-
-TODO:
-- メタデータ抽出機能の実装
 """
 
 import asyncio
@@ -14,6 +11,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
+from estat_downloader import __version__
 from estat_downloader.core.downloader import DownloadManager
 from estat_downloader.core.metadata_downloader import (
     MetadataDownloader,
@@ -213,7 +211,7 @@ def metadata(
 def version_callback(value: bool) -> None:
     """Display version information."""
     if value:
-        console.print("estat-downloader version 0.1.0")
+        console.print(f"estat-downloader version {__version__}")
         raise typer.Exit()
 
 
