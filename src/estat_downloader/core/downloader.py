@@ -82,32 +82,33 @@ class DownloadManager:
 
     def _detect_encoding_from_content(self, content: bytes) -> str:
         """
-        Detect encoding from content using chardet.
+        Detect encoding from content.
+        For e-Stat files, Shift-JIS (cp932) is the most common encoding.
 
         Args:
             content: File content as bytes
 
         Returns:
-            Detected encoding or 'utf-8' as fallback
+            Detected encoding
         """
-        # chardetで文字コードを推測
-        result = chardet.detect(content)
-        if result["confidence"] > 0.7:  # 確信度が70%以上の場合のみ採用
-            return result["encoding"]
-
-        # e-Statの場合、確信度が低い場合はCP932(Shift-JIS)の可能性が高い
+        # まず最も可能性の高いcp932(Shift-JIS)を試す
         try:
             content.decode("cp932")
             return "cp932"
         except UnicodeDecodeError:
             pass
 
-        # それでもだめな場合はUTF-8を試す
+        # cp932でだめな場合はUTF-8を試す
         try:
             content.decode("utf-8")
             return "utf-8"
         except UnicodeDecodeError:
             pass
+
+        # 上記で検出できない場合はchardetで推測を試みる
+        result = chardet.detect(content)
+        if result["confidence"] > 0.7:  # 確信度が70%以上の場合のみ採用
+            return result["encoding"]
 
         raise ValueError("Could not detect file encoding")
 
@@ -125,12 +126,18 @@ class DownloadManager:
         Returns:
             Content converted to target encoding
         """
-        # 1. まずヘッダーからエンコーディングを確認
-        source_encoding = self._detect_encoding_from_headers(headers)
+        # ヘッダーからのエンコーディング検出は信頼できないため、本文のみから推測する
+        # デフォルトでは shift-jis (cp932) と仮定
+        source_encoding = "cp932"
 
-        # 2. ヘッダーから取得できない場合は内容から推測
-        if not source_encoding:
-            source_encoding = self._detect_encoding_from_content(content)
+        # 念のため内容から推測を試みる
+        try:
+            detected_encoding = self._detect_encoding_from_content(content)
+            if detected_encoding:
+                source_encoding = detected_encoding
+        except ValueError:
+            # 推測に失敗した場合は、デフォルトのcp932を使用
+            pass
 
         # 3. 変換処理
         try:
