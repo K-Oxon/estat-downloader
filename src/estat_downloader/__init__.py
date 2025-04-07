@@ -3,7 +3,7 @@ e-Stat Downloader
 A CLI tool for downloading statistical data from e-Stat
 """
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 
 from estat_downloader.api import (
     DownloadResult,

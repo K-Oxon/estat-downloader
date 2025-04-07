@@ -85,7 +85,6 @@ wheels = [
 
 [[package]]
 name = "estat-downloader"
-version = "0.1.4"
 source = { editable = "." }
 dependencies = [
     { name = "beautifulsoup4" },

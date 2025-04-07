@@ -47,7 +47,7 @@ class DownloadManager:
         self,
         output_dir: Path,
         max_concurrent: int = 8,
-        timeout: float = 30.0,
+        timeout: float = 600.0,
     ):
         """
         Initialize download manager.
